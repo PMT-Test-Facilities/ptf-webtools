@@ -1,0 +1,457 @@
+<!DOCTYPE HTML>
+<!-- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 TRANSITIONAL//EN"> -->
+<html><head>
+<title>Gantry Move Control</title>
+<!--
+<link rel="stylesheet" href="http://ladd00.triumf.ca/~lindner/general/buttons2.css" media="screen" /> -->
+<link rel="stylesheet" href="buttons2.css" media="screen" /> 
+<!-- <link rel="stylesheet" href="http://ladd00.triumf.ca/~lindner/cdms/cdms_style.css" media="screen" /> -->
+<script type="text/javascript" src="test.js"></script>
+<script type="text/javascript" src="midas.js"></script>
+<script type="text/javascript" src="obsolete.js"></script>
+
+
+
+<script type="text/javascript">
+$("a").hover(function(e) {
+    $($(this).data("tooltip")).css({
+        left: e.pageX + 1,
+        top: e.pageY + 1
+    }).stop().show(100);
+}, function() {
+    $($(this).data("tooltip")).hide();
+});
+</script>
+<script type="text/javascript" src="../mhttpd.js"></script>
+
+<script>
+var mongodb = require('mongodb');
+    var server = new mongodb.Server("127.0.0.1", 27017, {});
+    new mongodb.Db('test', server, {}).open(function (error, client) {
+      if (error) throw error;
+      var collection = new mongodb.Collection(client, 'test_collection');
+      collection.find({}, {limit:10}).toArray(function(err, docs) {
+        console.dir(docs);
+      });
+    });
+</script>
+<script>
+function gantry_stop()
+{
+ODBSet("/Equipment/Motors00/Settings/Stop[*]", "y,y,y,y,y,y,y,y");
+ODBSet("/Equipment/Motors01/Settings/Stop[*]", "y,y,y,y,y,y,y,y");
+}
+</script>
+
+<script>
+function turnoff_motors0()
+{
+ODBSet("/Equipment/Motors00/Settings/TurnMotorsOff", "y");
+}
+</script>
+<script>
+function turnoff_motors1()
+{
+ODBSet("/Equipment/Motors01/Settings/TurnMotorsOff", "y");
+}
+</script>
+<!-- Function to call periodically  -->
+<script>
+window.setInterval("Refresh()",2000);
+function fixedPrecision(value){
+  return Math.round(value*1000)/1000;
+}
+function Refresh() {
+
+  var start = new Date().getTime();
+  var req = new Array();
+  req[0]= "/Equipment/Move/Control/Destination[0]"
+  req[1]= "/Equipment/Move/Control/Destination[1]"
+  req[2]= "/Equipment/Move/Control/Destination[2]"
+  req[3]= "/Equipment/Move/Control/Destination[3]"
+  req[4]= "/Equipment/Move/Control/Destination[4]"
+  req[5]= "/Equipment/Move/Variables/Position[0]"
+  req[6]= "/Equipment/Move/Variables/Position[1]"
+  req[7]= "/Equipment/Move/Variables/Position[2]"
+  req[8]= "/Equipment/Move/Variables/Position[3]"
+  req[9]= "/Equipment/Move/Variables/Position[4]"
+  req[10] = '/Equipment/Move/Variables/Moving'
+  req[11] = '/Equipment/Move/Variables/Initializing'
+  req[12] = '/Equipment/Move/Variables/Initializing'
+  req[13] = '/Equipment/Move/Variables/Initialized'
+  req[14] = '/Equipment/Move/Variables/Completed'
+  req[15] = '/Programs/feMove/First failed'
+  req[16] = '/Equipment/Phidget00/Variables/PH00[7]'
+  req[17] = '/Equipment/Phidget00/Variables/PH00[3]'
+  req[18] = '/Equipment/Phidget00/Variables/PH00[4]'
+  req[19] = '/Equipment/Phidget00/Variables/PH00[5]'
+  req[20] = '/Equipment/Move/Control/Destination[5]'
+  req[21] = '/Equipment/Move/Control/Destination[6]'
+  req[22] = '/Equipment/Move/Control/Destination[7]'
+  req[23] = '/Equipment/Move/Control/Destination[8]'
+  req[24] = '/Equipment/Move/Control/Destination[9]'
+  req[25] = '/Equipment/Move/Variables/Position[5]'
+  req[26] = '/Equipment/Move/Variables/Position[6]'
+  req[27] = '/Equipment/Move/Variables/Position[7]'
+  req[28] = '/Equipment/Move/Variables/Position[8]'
+  req[29] = '/Equipment/Move/Variables/Position[9]'
+  req[30] = '/Equipment/Phidget01/Variables/PH01[7]'
+  req[31] = '/Equipment/Phidget01/Variables/PH01[3]'
+  req[32] = '/Equipment/Phidget01/Variables/PH01[4]'
+  req[33] = '/Equipment/Phidget01/Variables/PH01[5]'
+  req[34] = '/Equipment/Phidget03/Variables/PH03[7]'
+  req[35] = '/Equipment/Phidget03/Variables/PH03[3]'
+  req[36] = '/Equipment/Phidget03/Variables/PH03[4]'
+  req[37] = '/Equipment/Phidget03/Variables/PH03[5]'
+  req[38] = '/Equipment/Phidget04/Variables/PH04[7]'
+  req[39] = '/Equipment/Phidget04/Variables/PH04[3]'
+  req[40] = '/Equipment/Phidget04/Variables/PH04[4]'
+  req[41] = '/Equipment/Phidget04/Variables/PH04[5]'
+  req[42] = '/Equipment/Scan/Variables/Current Point'
+
+  var result = ODBMGet(req);
+
+  if(result[10].match('y') || result[11].match('y')){
+    document.getElementById("gantry_moving").innerHTML = "Gantry is moving."
+    document.getElementById("gantry_moving").style.color ="Red"
+  } else {
+    document.getElementById("gantry_moving").innerHTML = "Gantry is stopped."
+    document.getElementById("gantry_moving").style.color ="Black"
+  }
+  if(result[12].match('y')){
+    document.getElementById("gantry_initialized").innerHTML = "Gantry is initializing."
+    document.getElementById("gantry_initialized").style.color ="Red"
+  }else if(result[13].match('y')){
+    document.getElementById("gantry_initialized").style.color ="Black"
+    document.getElementById("gantry_initialized").innerHTML = "Gantry is initialized."
+  } else {
+    document.getElementById("gantry_initialized").innerHTML = "Gantry is not initialized."
+    document.getElementById("gantry_initialized").style.color ="Black"
+  }
+
+  if(result[14].match('y')){
+    document.getElementById("gantry_completed").innerHTML = "Last move was completed."
+  } else {
+    document.getElementById("gantry_completed").innerHTML = "Last move was not completed."
+  }
+  if(result[42] > 0){ 
+    document.getElementById("scan_status").innerHTML = "Scan in progress."
+    document.getElementById("scan_status").style.color = "Red"
+  } else {
+    document.getElementById("scan_status").innerHTML = "No scan in progress."
+    document.getElementById("scan_status").style.color = "Black"
+  }
+  <!-- Check that femove is active -->
+  if (result[15] == 0){
+    document.getElementById("femove_active").innerHTML = "feMove is active";
+    document.getElementById("femove_active").style.color ="Black"
+    document.getElementById("init_button").disabled = false
+    document.getElementById("move_button").disabled = false
+  }else{
+    document.getElementById("femove_active").innerHTML = "feMove is not active";
+    document.getElementById("femove_active").style.color ="Red"
+    document.getElementById("init_button").disabled = true
+    document.getElementById("move_button").disabled = true
+  }
+
+  <!-- Check the current destination and current position -->
+
+
+  document.getElementById("destx").innerHTML = fixedPrecision(result[0]);
+  document.getElementById("desty").innerHTML = fixedPrecision(result[1]);
+  document.getElementById("destz").innerHTML = fixedPrecision(result[2]);
+  document.getElementById("destrot").innerHTML = fixedPrecision(result[3]);
+  document.getElementById("desttilt").innerHTML = fixedPrecision(result[4]);
+  document.getElementById("posx").innerHTML = fixedPrecision(result[5]);
+  document.getElementById("posy").innerHTML = fixedPrecision(result[6]);
+  document.getElementById("posz").innerHTML = fixedPrecision(result[7]);
+  document.getElementById("posrot").innerHTML = fixedPrecision(result[8]);
+  document.getElementById("postilt").innerHTML = fixedPrecision(result[9]);
+  document.getElementById("destx2").innerHTML = fixedPrecision(result[20]);
+  document.getElementById("desty2").innerHTML = fixedPrecision(result[21]);
+  document.getElementById("destz2").innerHTML = fixedPrecision(result[22]);
+  document.getElementById("destrot2").innerHTML = fixedPrecision(result[23]);
+  document.getElementById("desttilt2").innerHTML = fixedPrecision(result[24]);
+  document.getElementById("posx2").innerHTML = fixedPrecision(result[25]);
+  document.getElementById("posy2").innerHTML = fixedPrecision(result[26]);
+  document.getElementById("posz2").innerHTML = fixedPrecision(result[27]);
+  document.getElementById("posrot2").innerHTML = fixedPrecision(result[28]);
+  document.getElementById("postilt2").innerHTML = fixedPrecision(result[29]);
+
+  document.getElementById("phidget_tilt").innerHTML = fixedPrecision(result[16]);
+  document.getElementById("phidget_magx").innerHTML = fixedPrecision(result[17]);
+  document.getElementById("phidget_magy").innerHTML = fixedPrecision(result[18]);
+  document.getElementById("phidget_magz").innerHTML = fixedPrecision(result[19]);
+  document.getElementById("phidget1_tilt").innerHTML = fixedPrecision(result[30]);
+  document.getElementById("phidget1_magx").innerHTML = fixedPrecision(result[31]);
+  document.getElementById("phidget1_magy").innerHTML = fixedPrecision(result[32]);
+  document.getElementById("phidget1_magz").innerHTML = fixedPrecision(result[33]);
+
+  document.getElementById("phidget3_tilt").innerHTML = fixedPrecision(result[34]);
+  document.getElementById("phidget3_magx").innerHTML = fixedPrecision(result[35]);
+  document.getElementById("phidget3_magy").innerHTML = fixedPrecision(result[36]);
+  document.getElementById("phidget3_magz").innerHTML = fixedPrecision(result[37]);
+
+  document.getElementById("phidget4_tilt").innerHTML = fixedPrecision(result[38]);
+  document.getElementById("phidget4_magx").innerHTML = fixedPrecision(result[39]);
+  document.getElementById("phidget4_magy").innerHTML = fixedPrecision(result[40]);
+  document.getElementById("phidget4_magz").innerHTML = fixedPrecision(result[41]);
+
+  document.getElementById("datetime").innerHTML = new Date().toString();
+
+  <!-- Check the current feMove/feMotor messages -->
+  var mess = ODBGetMsg(20)
+  var innerhtml = "<font size=-2><ul>"
+  for (var i = 0; i < mess.length; i++) {
+    if(mess[i]!=""){
+      if(mess[i].search("feMotor") != -1 ||
+         mess[i].search("feMove") != -1){
+        if(mess[i].search("ERROR]") == -1){
+          innerhtml += "<li>" + mess[i]  + "</li>"
+        }else{
+          innerhtml += "<li> <font color=\"red\" >" + mess[i]  + "</font></li>"
+        }
+      }
+    } 
+  }
+  innerhtml += "</ul></font>"
+  document.getElementById("mmessages").innerHTML = innerhtml;
+  
+  var end = new Date().getTime();
+  var time = end - start;
+  document.getElementById("exectime").innerHTML = time
+}
+</script>
+<!-- Function to call when buttons are pushed  -->
+<script>
+function reinitialize()
+{
+ODBSet("/Equipment/Move/Control/ReInitialize", "y");
+}
+</script>
+<script>
+function gantry_move()
+{
+ODBSet("/Equipment/Move/Control/Start Move", "y");
+}
+</script>
+<!-- Function to check numeric value  -->
+<script>
+function checkInput(value, prev_value){
+ var tested = parseFloat(value);
+ if(isNaN(tested)){
+  alert("Please enter numeric value");
+  <!-- Stay where we are -->
+  tested = fixedPrecision(prev_value);
+ }
+ return tested;
+}
+<!-- Function to update destination values  -->
+function updateX(field) {
+var prev = ODBGet('/Equipment/Move/Variables/Position[0]');
+ODBSet('/Equipment/Move/Control/Destination[0]',checkInput(field.value, prev));
+}
+function updateY(field) {
+var prev = ODBGet('/Equipment/Move/Variables/Position[1]');
+ODBSet('/Equipment/Move/Control/Destination[1]',checkInput(field.value, prev));
+}
+function updateZ(field) {
+var prev = ODBGet('/Equipment/Move/Variables/Position[2]');
+ODBSet('/Equipment/Move/Control/Destination[2]',checkInput(field.value, prev));
+}
+function updateRot(field) {
+var prev = ODBGet('/Equipment/Move/Variables/Position[3]');
+ODBSet('/Equipment/Move/Control/Destination[3]',checkInput(field.value, prev));
+}
+function updateTilt(field) {
+var prev = ODBGet('/Equipment/Move/Variables/Position[4]');
+ODBSet('/Equipment/Move/Control/Destination[4]',checkInput(field.value, prev));
+}
+function updateX2(field) {
+var prev = ODBGet('/Equipment/Move/Variables/Position[5]');
+ODBSet('/Equipment/Move/Control/Destination[5]',checkInput(field.value, prev));
+}
+function updateY2(field) {
+var prev = ODBGet('/Equipment/Move/Variables/Position[6]');
+ODBSet('/Equipment/Move/Control/Destination[6]',checkInput(field.value, prev));
+}
+function updateZ2(field) {
+var prev = ODBGet('/Equipment/Move/Variables/Position[7]');
+ODBSet('/Equipment/Move/Control/Destination[7]',checkInput(field.value, prev));
+}
+function updateRot2(field) {
+var prev = ODBGet('/Equipment/Move/Variables/Position[8]');
+ODBSet('/Equipment/Move/Control/Destination[8]',checkInput(field.value, prev));
+}
+function updateTilt2(field) {
+var prev = ODBGet('/Equipment/Move/Variables/Position[9]');
+ODBSet('/Equipment/Move/Control/Destination[9]',checkInput(field.value, prev));
+}
+
+</script>
+
+</head>
+
+
+
+<!-- ----------------- BODY ------------->  
+<body onload="Refresh();">
+
+
+<div id="container" style="">
+
+<div id="header" style="background-color:#FFA500;">
+<h1 style="margin-bottom:0;">PTF Gantry Movement Control</h1>
+</div>
+
+<div id="menu" style="background-color:#FFD700;height:550px;width:450px;float:left;">
+<!-- This works because it's a form. The details are in mhttpd.cxx -->
+<form name="form1" method="Get">
+    <tr><td width="50%">
+	<input value="Status"    name="cmd" type="submit">
+	<input value="ODB"       name="cmd" type="submit">
+	<input value="History"   name="cmd" type="submit">
+    </td> </tr>
+    <br>
+    <br>
+</tr>
+</form>
+
+<b>Gantry Status</b><br>
+<ul>
+<li id="gantry_moving"></li>
+<li id="gantry_initialized"></li>
+<li id="gantry_completed"></li>
+<li id="scan_status"></li>
+</ul>
+Gantry Position (Destination):
+
+<div id="div_ltop"> <div id="div_lmargin"></div>
+<div id="div_lshort"></div><div id='div_lmarginsl'></div>
+<div id="div_ldestsl" >Gantry 0 </div> 
+<div id='div_lmargin'></div><div id="div_dest">Gantry 1 </div> </div>
+
+
+<script>
+var Names = new Array("x","y","z","rot","tilt");
+for (var i=0;i<5;i++){
+document.write("<div id='div_ltop'><div id='div_lmargin'></div>");
+document.write("<div id='div_lshort'> " + Names[i] + " (m) </div>");
+document.write("<div id='div_lmarginsl'></div><div id='div_possl'><span id='pos" + Names[i] + "'></span> </div>");
+document.write("<div id='div_possl'> (<span id='dest" + Names[i] + "'></span>)  </div> ");
+document.write("<div id='div_lmargin'></div><div id='div_pos'><span id='pos" + Names[i] + "2'></span> </div>");
+document.write("<div id='div_pos'>  (<span id='dest" + Names[i] + "2'></span>)</span>  </div> </div>");
+}
+</script>
+
+<div id="div_ltop"> <div id="div_lmargin"></div><div id="div_lshort"></div><div id="div_ldest" ></div> <div id="div_ldest"> </div> </div>
+
+<ul>
+
+<li>Phidget0 Measurements:</li>
+<ul>
+<font size=-1>
+<li >Tilt = <span id="phidget_tilt"></span> deg </li>
+<li >MagField = <span id="phidget_magx"></span>  <span id="phidget_magy"></span>  <span id="phidget_magz"></span>  </li>
+</font>
+</ul>
+
+<li>Phidget1 Measurements:</li>
+<ul>
+<font size=-1>
+<li >Tilt = <span id="phidget1_tilt"></span> deg </li>
+<li >MagField = <span id="phidget1_magx"></span>  <span id="phidget1_magy"></span>  <span id="phidget1_magz"></span>  </li>
+</font>
+</ul>
+
+<li>Phidget3 Measurements:</li>
+<ul>
+<font size=-1>
+<li >Tilt = <span id="phidget3_tilt"></span> deg </li>
+<li >MagField = <span id="phidget3_magx"></span>  <span id="phidget3_magy"></span>  <span id="phidget3_magz"></span>  </li>
+</font>
+</ul>
+
+<li>Phidget4 Measurements:</li>
+<ul>
+<font size=-1>
+<li >Tilt = <span id="phidget4_tilt"></span> deg </li>
+<li >MagField = <span id="phidget4_magx"></span>  <span id="phidget4_magy"></span>  <span id="phidget4_magz"></span>  </li>
+</font>
+</ul>
+
+</ul>
+</div>
+
+<div id="content" style="background-color:#EEEEEE;height:550px;width:300px;float:left;">
+
+
+
+<b>Gantry Control</b>
+<br>
+<button class="button red" onclick="gantry_stop()" id="stop_button">Stop Gantry Now!!</button>
+
+<br>
+<p id="femove_active"></p>
+<button type="button" onclick="reinitialize()" id="init_button">Reinitialize Gantry</button>
+<button type="button" onclick="gantry_move()" id="move_button">Move Gantry</button>
+<br>
+Destination: <br>
+<div id="div_top"> <div id="div_margin"></div>
+<div id="div_short"></div><div id="div_dest" >Gantry 0 </div> <div id="div_dest">Gantry 1 </div> </div>
+
+<div id="div_top"><div id="div_margin"></div>
+<div id="div_short"> X </div>
+<div id="div_dest" ><input size=10 onchange="updateX(this);"/> </div> 
+<div id="div_dest" ><input size=10 onchange="updateX2(this);"/> </div>
+</div>
+
+<div id="div_top"> <div id="div_margin"></div>
+<div id="div_short"> Y </div>
+<div id="div_dest" ><input size=10 onchange="updateY(this);"/> </div> 
+<div id="div_dest" ><input size=10 onchange="updateY2(this);"/> </div>
+</div>
+
+<div id="div_top"><div id="div_margin"></div>
+<div id="div_short"> Z </div>
+<div id="div_dest" ><input size=10 onchange="updateZ(this);"/> </div> 
+<div id="div_dest" ><input size=10 onchange="updateZ2(this);"/> </div>
+</div>
+
+<div id="div_top"><div id="div_margin"></div>
+<div id="div_short"> Rotate </div>
+<div id="div_dest" ><input size=10 onchange="updateRot(this);"/> </div> 
+<div id="div_dest" ><input size=10 onchange="updateRot2(this);"/> </div>
+</div>
+
+<div id="div_top"><div id="div_margin"></div>
+<div id="div_short"> Tilt </div>
+<div id="div_dest" ><input size=10 onchange="updateTilt(this);"/> </div> 
+<div id="div_dest" ><input size=10 onchange="updateTilt2(this);"/> </div>
+</div>
+
+
+<button type="button" onclick="turnoff_motors0()" id="init_button">Turn off Motors Gantry 0</button>
+<button type="button" onclick="turnoff_motors1()" id="stop_button">Turn off Motors Gantry 1</button>
+
+</div>
+
+<div id="content" style=";height:500px;width:600px;float:left;">
+
+<b>  MIDAS Messages (feMove/feMotor ONLY)  </b>
+<p id="mmessages"></p>
+
+</div>
+
+<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+<p>Last updated:</p>
+<p id="datetime"></p>
+<p>Javascript executed in <span id="exectime"></span> ms. </p>
+</div>
+
+</div>
+
+</body>
+</html>
+
+

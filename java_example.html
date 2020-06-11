@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 TRANSITIONAL//EN">
+<html><head>
+<title>Gantry Move Control</title>
+<script type="text/javascript" src="../mhttpd.js"></script>
+<!--
+<script>
+alert("My First JavaScript");
+</script>
+-->
+<script>
+window.setInterval("Refresh()", 1000);
+
+  function Refresh() {
+    document.getElementById("run_number").innerHTML = ODBGet('/Runinfo/Run number');
+  }
+</script>
+<script>
+function myFunction()
+{
+document.getElementById("demo").innerHTML="My First JavaScript Function";
+}
+</script>
+</head>
+<body>
+eee
+<!-- js_constants! -> filename  names.js
+List of device names and corresponding index into arrays
+ -->
+<script type="text/javascript"  src="js_constants!">
+</script>
+ee
+<!-- js_functions! -> filename  common_functions.js
+ -->      
+<script type="text/javascript"  src="js_functions!">
+</script>
+ee
+
+<td id="run_number"></td>
+<p id="run_number">Run number</p>
+
+
+<script>
+document.write("<h1>This is a heading</h1>");
+document.write("<p>This is a paragraph</p>");
+</script>
+<p id="demo">A Paragraph</p>
+
+<button type="button" onclick="myFunction()">Try it</button>
+
+</body>
+</body>
+</html>
+
+

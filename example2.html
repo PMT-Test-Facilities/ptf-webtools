@@ -1,0 +1,159 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Example MIDAS Javascript functions</title>
+
+ 
+    <script type="text/javascript">
+function XMLHttpRequestGeneric()
+{
+   var request;
+   try {
+      request = new XMLHttpRequest(); // Firefox, Opera 8.0+, Safari
+   }
+   catch (e) {
+      try {
+         request = new ActiveXObject('Msxml2.XMLHTTP'); // Internet Explorer
+      }
+      catch (e) {
+         try {
+            request = new ActiveXObject('Microsoft.XMLHTTP');
+         }
+         catch (e) {
+           alert('Your browser does not support AJAX!');
+           return undefined;
+         }
+      }
+   }
+
+   return request;
+}
+
+
+function set_names(ODB,value){
+
+        var request = XMLHttpRequestGeneric();
+        var url = "?cmd=jset&odb="+ODB+"&value="+value;
+        request.open('GET', url, false);
+        request.send(null);
+
+}				      
+function get_names(ODB,value){
+
+        var request = XMLHttpRequestGeneric();
+        var url = "?cmd=jcopy&odb="+ODB+"&format=json";
+        request.open('GET', url, false);
+        request.send(null);
+        var obj = JSON.parse(request.responseText);
+
+        document.getElementById('name_readback').innerHTML = obj.NamesOld[0];
+}				      
+
+      function set_program_info(){
+
+        var request = XMLHttpRequestGeneric();
+        var url = '?cmd=jcopy&odb=' + '/Programs&format=json'; 
+        request.open('GET', url, false);
+        request.send(null);
+        var obj = JSON.parse(request.responseText);
+        programs = "List of programs (running programs are in red)<br>"
+
+        for(var o in obj){
+          if(!obj.hasOwnProperty(o)) continue;
+          
+          var program = obj[o];  
+          if(!program.hasOwnProperty("First failed"))continue;
+
+          if(program["First failed"] != 0)
+            programs += o + "<br>" 
+          else
+            programs += "<span style='color: red'>" + o + "</span><br>"          
+          
+        }
+        document.getElementById('program_info').innerHTML = programs;
+
+
+      }
+      function set_run_info()
+      {
+
+        var request = XMLHttpRequestGeneric();
+        var url = '?cmd=jcopy&odb=' + '/RunInfo&format=json'; 
+        request.open('GET', url, false);
+        request.send(null);
+        var obj = JSON.parse(request.responseText);
+
+
+        var runnum = obj["Run number"];
+        status=""
+        status += "<span>Current run number is " +runnum + "</span><br>";
+        if(obj.State == 1)
+          status += "<span>Run is stopped</span>";
+        else if(obj.State == 3)
+          status += "<span>Run is started</span>";
+        else 
+          status += "<span>Run in transition</span>";
+        status += "<br><span>Start time " +obj["Start time"] + "</span><br>";
+        status += "<span>Stop time " +obj["Stop time"] + "</span><br>";
+
+          
+
+      document.getElementById('run_status').innerHTML = status;
+      }
+
+      function jsonp_call(ODB, function_name){
+         var script = document.createElement("script");
+         script.type = "text/javascript";
+         script.src = "?cmd=jcopy&odb="+ODB+"&format=json-p&callback=" + function_name
+         document.body.appendChild(script);
+         document.body.removeChild(script);
+
+      }
+
+  
+				      
+
+    </script>
+  </head>
+
+  <body>
+
+    <ul>
+
+      <li>
+        <h2>Direct XMLHttpRequest ODB Access</h2>
+
+        <p>
+          <input type=button value='Get Current Run Info' onClick='set_run_info();'></input>
+<input type=button value='Get Programs' onClick='set_program_info();'></input>
+        </p>
+        Run Status:
+        <pre id='run_status'>
+(empty)
+  </pre>
+
+         Programs:
+        <pre id='program_info'>
+(empty)
+  </pre>
+
+
+
+
+
+
+    </ul>
+
+<hr>
+<hr>
+Set the value of 'NamesOld[0]':
+	
+<input type="someid" onchange="set_names('Equipment/Phidget/Settings/NamesOld[0]',this.value);get_names('Equipment/Phidget/Settings/');this.value='';"/> <br>
+Readback value  'NamesOld[0]':  <span id="name_readback"></span>
+
+
+
+
+  </body>
+</html>

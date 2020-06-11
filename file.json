@@ -1,0 +1,17 @@
+# MIDAS ODB JSON
+# FILE file.json
+# PATH /Custom
+{
+  "Gantry Move/key" : { "type" : 12, "item_size" : 100, "last_written" : 1367272707 },
+  "Gantry Move" : "/home1/midptf/online/custom/move_control.html",
+  "GantrySlow/key" : { "type" : 12, "item_size" : 120, "last_written" : 1367273981 },
+  "GantrySlow" : "/home1/midptf/online/custom/move_control_slow.html",
+  "XmlRequest/key" : { "type" : 12, "item_size" : 128, "last_written" : 1374014458 },
+  "XmlRequest" : "/home1/midptf/online/custom/example.html",
+  "XmlRequest2/key" : { "type" : 12, "item_size" : 128, "last_written" : 1374014610 },
+  "XmlRequest2" : "/home1/midptf/online/custom/example2.html",
+  "example1/key" : { "type" : 12, "item_size" : 128, "last_written" : 1375988887 },
+  "example1" : "/home1/midptf/online/custom/dvtest.html",
+  "dv test2/key" : { "type" : 12, "item_size" : 41, "last_written" : 1376004447 },
+  "dv test2" : "/home1/midptf/online/custom/dvtest2.html"
+}

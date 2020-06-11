@@ -1,0 +1,205 @@
+Run	Start Time			Stop Time			Pedestal?	Light source	Laser power	Attenuation(dB) Comments
+---	----------			---------			---------	------------	-----------	--------------- --------
+752	Wed Nov 19 16:32:55 2014	Wed Nov 19 16:33:15 2014	n		None		0		0		Test run logging
+753	Wed Nov 19 18:13:11 2014	Wed Nov 19 18:13:20 2014	n		None		0		0		Test run logging
+754	Wed Nov 19 18:26:01 2014	Wed Nov 19 18:26:17 2014	n		None		0		0		Test html table
+755	Wed Nov 19 18:28:03 2014	Wed Nov 19 18:28:22 2014	n		None		0		0		Test html table
+756	Wed Nov 19 18:29:06 2014	Wed Nov 19 18:29:14 2014	n		None		0		0		Test html table
+757	Wed Nov 19 18:38:17 2014	Wed Nov 19 18:38:38 2014	n		None		0		0		Test html table
+758	Wed Nov 19 18:44:03 2014	Wed Nov 19 18:44:21 2014	n		None		0		0		Test root tree
+759	Wed Nov 19 18:52:08 2014	Wed Nov 19 18:52:25 2014	n		None		0		0		Test root tree
+760	Wed Nov 19 18:55:59 2014	Wed Nov 19 18:56:07 2014	n		None		0		0		Test root tree
+761	Wed Nov 19 19:14:07 2014	Wed Nov 19 19:14:20 2014	n		None		0		0		Test root tree
+762	Wed Nov 19 19:16:12 2014	Wed Nov 19 19:16:21 2014	n		None		0		0		Test root tree
+763	Wed Nov 19 19:18:22 2014	Wed Nov 19 19:18:32 2014	n		None		0		0		Test root tree
+764	Wed Nov 19 19:23:35 2014	Wed Nov 19 19:25:48 2014	n		None		0		0		Test root tree
+765	Wed Nov 19 19:37:28 2014	Wed Nov 19 19:37:54 2014	n		None		0		0		Test root tree
+
+766	Thu Nov 20 17:45:56 2014	Thu Nov 20 17:46:22 2014	n		None		0		0		Short scan for testing new tree
+767	Thu Nov 20 17:47:11 2014	Thu Nov 20 17:50:39 2014	n		None		0		0		Short scan for testing new tree
+769	Tue Dec 16 14:26:21 2014	Tue Dec 16 14:26:56 2014	n		None		0		0		
+770	Wed Dec 17 14:50:16 2014	Wed Dec 17 14:50:45 2014	n		None		0		0		
+771	Wed Dec 17 14:51:02 2014	Wed Dec 17 14:52:14 2014	n		None		0		0		
+772	Wed Dec 17 14:52:43 2014	Wed Dec 17 14:59:05 2014	n		None		0		0		
+773	Wed Dec 17 14:59:12 2014	Wed Dec 17 15:11:26 2014	n		None		0		0		
+774	Wed Dec 17 15:19:19 2014	Wed Dec 17 15:19:28 2014	n		None		0		0		
+775	Wed Dec 17 15:20:55 2014	Wed Dec 17 15:21:05 2014	n		None		0		0		
+776	Wed Dec 17 15:23:51 2014	Wed Dec 17 15:30:16 2014	n		None		0		0		
+777	Wed Dec 17 15:30:23 2014	Wed Dec 17 15:32:13 2014	n		None		0		0		
+778	Wed Dec 17 15:43:40 2014	Wed Dec 17 16:03:32 2014	n		None		0		0		
+779	Wed Dec 17 16:03:59 2014	Wed Dec 17 16:44:25 2014	n		None		0		0		
+780	Wed Dec 17 16:44:37 2014	Wed Dec 17 16:45:06 2014	n		None		0		0		
+781	Wed Dec 17 16:47:51 2014	Wed Dec 17 16:53:33 2014	n		None		0		0		
+782	Wed Dec 17 16:53:51 2014	Wed Dec 17 16:56:56 2014	n		None		0		0		
+783	Wed Dec 17 16:57:00 2014	Wed Dec 17 16:57:48 2014	n		None		0		0		
+784	Wed Dec 17 16:57:52 2014	Wed Dec 17 17:00:30 2014	n		None		0		0		
+785	Thu Dec 18 14:11:19 2014	Thu Dec 18 14:40:16 2014	n		None		0		0		
+786	Thu Dec 18 14:40:20 2014	Thu Dec 18 14:40:34 2014	n		None		0		0		
+787	Thu Dec 18 14:40:44 2014	Thu Dec 18 14:43:55 2014	n		None		0		0		
+788	Thu Dec 18 14:44:04 2014	Fri Dec 19 11:26:22 2014	n		None		0		0		
+789	Fri Dec 19 11:27:07 2014	Fri Dec 19 11:29:36 2014	n		None		0		0		Test of V1730 HPD and monitor with 22db laser
+790	Fri Dec 19 11:30:11 2014	Fri Dec 19 11:30:47 2014	n		None		0		0		Test of V1730 HPD and monitor with 22db laser - only 2 chan
+793	Fri Dec 19 11:33:08 2014	Fri Dec 19 11:33:34 2014	n		None		0		0		Test of V1730 HPD and monitor with 20db laser 
+794	Fri Dec 19 11:33:56 2014	Fri Dec 19 11:37:24 2014	n		None		0		0		Test of V1730 HPD and monitor with 20db laser 
+795	Fri Dec 19 11:39:37 2014	Fri Dec 19 11:43:06 2014	n		None		0		0		Test of V1730 HPD and monitor with 24db laser 
+796	Fri Dec 19 11:47:51 2014	Fri Dec 19 11:50:44 2014	n		None		0		0		shaper on HPD now...
+797	Fri Dec 19 11:50:55 2014	Fri Dec 19 11:53:12 2014	n		None		0		0		shaper on HPD now...
+798	Fri Dec 19 11:56:08 2014	Fri Dec 19 11:59:56 2014	n		None		0		0		testing 2chan readout
+799	Wed Jan	Wed Jan	n		None		0		0		22db laser with HPD and V1730 readoud
+800	Wed Jan	Wed Jan	n		None		0		0		22db laser with HPD and V1730 readoud
+801	Wed Jan	Wed Jan	n		None		0		0		20db laser with HPD and V1730 readoud
+802	Wed Jan	Wed Jan	n		None		0		0		20db laser with HPD and V1730 readoud
+803	Wed Jan	Wed Jan	n		None		0		0		17db laser with HPD and V1730 readoud
+804	Wed Jan	Wed Jan	n		None		0		0		24db laser with HPD and V1730 readoud
+805	Wed Jan	Wed Jan	n		None		0		0		24db laser with HPD and V1730 readoud
+806	Wed Jan	Wed Jan	n		None		0		0		14db laser with HPD and V1730 readoud
+807	Thu Jan	Thu Jan	n		None		0		0		test 140108_0
+808	Thu Jan	Thu Jan	n		None		0		0		test 140108_0
+809	Thu Jan	Thu Jan	n		None		0		0		test 140108_0
+810	Thu Jan	Thu Jan	n		None		0		0		test 140108_0
+811	Thu Jan	Thu Jan	n		None		0		0		test 140108_0
+812	Thu Jan	Thu Jan	n		None		0		0		test 140108_0
+
+818	Thu Jan	Thu Jan	n		None		0		0		test 140108_scan0
+819	Thu Jan	Thu Jan	n		None		0		0		test 140108_scan0
+820	Thu Jan	Thu Jan	n		None		0		0		test 140108_scan0
+821	Thu Jan	Thu Jan	n		None		0		0		test 140108 scan 4cm
+822	Thu Jan	Thu Jan	n		None		0		0		test 140108 scan 2cm
+824	Thu Jan	Thu Jan	n		None		0		0		test 140108 scan 1cm
+826	Thu Jan	Fri Jan	n		None		0		0		test 140108 scan 1cm
+828	Fri Jan	Fri Jan	n		None		0		0		test 140108 scan 0.5cm
+830	Tue Jan 13 18:56:58 2015	Tue Jan 13 19:02:14 2015	n		None		0		0		test
+831	Tue Jan 13 19:07:07 2015	Tue Jan 13 19:09:45 2015	n		None		0		0		test
+832	Tue Jan 13 19:47:27 2015	Tue Jan 13 19:48:58 2015	n		None		0		0		test
+833	Tue Jan 13 19:57:52 2015	Tue Jan 13 20:06:57 2015	n		404nm		8		22		Scan 6cm
+834	Tue Jan 13 20:14:42 2015	Tue Jan 13 20:37:42 2015	n		404nm		8		22		Scan 2cm
+835	Tue Jan 13 23:45:42 2015	Wed Jan 14 03:25:33 2015	n		404nm		8		22		Scan 0.5cm
+836	Wed Jan 14 12:04:19 2015	Wed Jan 14 12:12:15 2015	n		404nm		8		22		Scan 6cm, rotate 180 deg
+837	Wed Jan 14 12:32:27 2015	Wed Jan 14 12:55:27 2015	n		404nm		8		22		Scan 2cm, 8-inch HPD rotate 180 deg
+838	Wed Jan 14 13:03:15 2015	Wed Jan 14 16:43:06 2015	n		404nm		8		22		Scan 0.5cm, 8-inch HPD rotate 180 deg
+840	Wed Jan 14 17:54:13 2015	Wed Jan 14 17:54:34 2015	n		467nm		8		22		test
+841	Wed Jan 14 17:57:12 2015	Wed Jan 14 21:37:04 2015	n		467nm		8		22		Scan 0.5cm, 8-inch HPD rotate 180 deg
+842	Thu Jan 15 12:05:16 2015	Thu Jan 15 12:09:19 2015	y				0		0		pedestal, 8-inch HPD rotate 180 deg
+843	Thu Jan 15 12:10:58 2015	Thu Jan 15 12:14:57 2015	n		467nm		8		32		test, 8-inch HPD rotate 180 deg
+844	Thu Jan 15 13:56:20 2015	Thu Jan 15 13:58:26 2015	n		404nm		8		22		test, 8-inch HPD rotate 180 deg
+845	Thu Jan 15 14:00:36 2015	Thu Jan 15 17:40:33 2015	n		404nm		8		22		Scan 0.5cm, 8-inch HPD rotate 180 deg tilted
+846	Thu Jan 15 18:59:33 2015	Thu Jan 15 22:39:58 2015	n		404nm		8		22		Scan 0.5cm, tilt=5deg rot=0deg, 8-inch HPD rotate 180 deg tilted
+847	Thu Jan 15 22:43:42 2015	Fri Jan 16 01:44:34 2015	n		404nm		8		22		Scan 0.5cm, tilt=-5deg rot=0deg, 8-inch HPD rotate 180 deg tilted
+848	Fri Jan 16 01:46:35 2015	Fri Jan 16 05:03:10 2015	n		404nm		8		22		Scan 0.5cm, tilt=-5deg rot=90deg, 8-inch HPD rotate 180 deg tilted
+850	Fri Jan 16 05:10:08 2015	Fri Jan 16 05:19:19 2015	n		404nm		8		22		Scan 6cm, tilt=10deg rot=0deg, 8-inch HPD rotate 180 deg tilted
+851	Fri Jan 16 05:26:29 2015	Fri Jan 16 08:41:56 2015	n		404nm		8		22		Scan 0.5cm, tilt=10deg rot=0deg, 8-inch HPD rotate 180 deg tilted
+853	Fri Jan 16 09:39:31 2015	Fri Jan 16 09:40:12 2015	n		404nm		8		22		test
+854	Fri Jan 16 13:19:39 2015	Fri Jan 16 13:20:11 2015	n		404nm		8		22		test
+855	Fri Jan 16 13:24:50 2015	Fri Jan 16 13:25:03 2015	n		404nm		8		22		test
+856	Fri Jan 16 14:18:15 2015	Fri Jan 16 14:24:28 2015	n		404nm		8		22		test
+857	Fri Jan 16 14:27:00 2015	Fri Jan 16 14:28:18 2015	n		404nm		8		22		test
+858	Fri Jan 16 14:29:15 2015	Fri Jan 16 14:30:52 2015	n		404nm		8		22		test
+859	Fri Jan 16 17:06:17 2015	Fri Jan 16 17:07:02 2015	n		404nm		8		22		test 
+860	Fri Jan 16 17:07:09 2015	Fri Jan 16 17:10:07 2015	n		404nm		8		22		test 
+861	Fri Jan 16 18:11:07 2015	Fri Jan 16 18:12:21 2015	n		404nm		8		22		test 
+862	Fri Jan 16 18:22:06 2015	Fri Jan 16 18:24:05 2015	n		404nm		8		22		test 
+863	Fri Jan 16 18:28:01 2015	Fri Jan 16 18:29:10 2015	n		404nm		8		22		test 
+864	Fri Jan 16 18:29:15 2015	Fri Jan 16 18:30:59 2015	n		404nm		8		22		test 
+865	Fri Jan 16 18:31:10 2015	Fri Jan 16 18:33:36 2015	n		404nm		8		22		test 
+866	Mon Jan 19 13:22:35 2015	Mon Jan 19 14:13:13 2015	n		404nm		8		30		HPD timing tests
+867	Thu Jan 22 10:13:21 2015	Thu Jan 22 10:23:58 2015	n		404nm		8		20		HPD timing tests
+868	Thu Jan 22 10:24:06 2015	Thu Jan 22 10:24:57 2015	n		404nm		8		20		HPD timing tests
+869	Thu Jan 22 11:31:28 2015	Thu Jan 22 11:34:10 2015	y				0		0		HPD tests, LV=2.33V
+870	Thu Jan 22 11:35:02 2015	Thu Jan 22 11:35:46 2015	y				0		0		HPD tests, LV=2.33V
+871	Thu Jan 22 12:34:37 2015	Thu Jan 22 12:36:11 2015	y				0		0		HPD tests, LV=2.33V
+872	Thu Jan 22 16:20:10 2015	Thu Jan 22 16:22:25 2015	y				8		14		HPD tests, LV=2.33V
+873	Thu Jan 22 16:23:13 2015	Thu Jan 22 16:26:05 2015	y				8		14		HPD tests, LV=2.80V
+874	Thu Jan 22 16:27:12 2015	Thu Jan 22 16:30:38 2015	y				8		254		HPD tests, LV=2.80V
+875	Thu Jan 22 16:31:07 2015	Thu Jan 22 16:36:32 2015	y				8		22		HPD tests, LV=2.80V
+876	Thu Jan 22 16:36:52 2015	Thu Jan 22 16:41:36 2015	y				8		20		HPD tests, LV=2.80V
+877	Thu Jan 22 16:42:04 2015	Thu Jan 22 16:47:04 2015	y				8		18		HPD tests, LV=2.80V
+878	Thu Jan 22 16:47:40 2015	Thu Jan 22 16:51:09 2015	y				8		16		HPD tests, LV=2.80V
+879	Thu Jan 22 17:04:26 2015	Thu Jan 22 17:05:07 2015	y				0		0		0
+880	Thu Jan 22 17:16:02 2015	Thu Jan 22 17:18:14 2015	y				0		0		HPD pedestal run
+881	Thu Jan 22 17:19:49 2015	Thu Jan 22 17:21:06 2015	n		404nm		8		36		HPD single PE run
+882	Thu Jan 22 17:22:16 2015	Thu Jan 22 17:26:03 2015	y		0		0		0		HPD pedestal run
+883	Thu Jan 22 17:30:04 2015	Thu Jan 22 17:37:49 2015	n		404nm		8		36		HPD single PE run
+884	Thu Jan 22 18:07:12 2015	Thu Jan 22 18:15:26 2015	n		404nm		8		22		HPD multi PE run
+888	Thu Jan 22 19:11:37 2015	Thu Jan 22 19:11:42 2015	n		0		0		0		Testing new feScan
+889	Thu Jan 22 19:16:10 2015	Thu Jan 22 19:16:14 2015	n		0		0		0		Testing new feScan
+890	Thu Jan 22 19:22:16 2015	Thu Jan 22 19:22:20 2015	n		0		0		0		Testing new feScan
+891	Thu Jan 22 19:23:31 2015	Thu Jan 22 19:23:35 2015	n		0		0		0		Testing new feScan
+892	Thu Jan 22 19:24:37 2015	Thu Jan 22 19:24:42 2015	n		0		0		0		Testing new feScan
+893	Thu Jan 22 19:38:18 2015	Thu Jan 22 19:39:23 2015	n		0		0		0		Testing new feScan
+894	Thu Jan 22 19:44:18 2015	Thu Jan 22 19:44:34 2015	n		0		0		0		Testing new feScan
+895	Thu Jan 22 19:49:04 2015	Thu Jan 22 20:02:21 2015	n		0		0		0		Testing new feScan
+896	Thu Jan 22 20:04:03 2015	Thu Jan 22 20:04:33 2015	n		0		0		0		Testing new feScan
+897	Thu Jan 22 20:04:56 2015	Thu Jan 22 20:05:54 2015	n		0		0		0		Testing new feScan
+898	Thu Jan 22 20:09:58 2015	Thu Jan 22 20:36:01 2015	n		404nm		8		36		HPD single PE run
+899	Thu Jan 22 20:55:14 2015	Fri Jan 23 04:11:30 2015	n		404nm		8		36		Scan 0.5cm, 8-inch HPD 6s, low intensity, higher frequency (factor of 10)
+900	Fri Jan 23 13:11:25 2015	Fri Jan 23 13:11:42 2015	n		404nm		8		36		Testing Logger check
+901	Fri Jan 23 13:13:13 2015	Fri Jan 23 13:13:22 2015	n		404nm		8		36		Testing Logger check
+905	Fri Jan 23 13:15:53 2015	Fri Jan 23 13:16:05 2015	n		404nm		8		36		Testing Logger check
+906	Fri Jan 23 15:26:42 2015	Fri Jan 23 15:27:05 2015	n		404nm		8		36		Testing front end rates
+907	Fri Jan 23 15:42:48 2015	Fri Jan 23 15:43:00 2015	n		404nm		8		36		Testing new scan sequence
+910	Fri Jan 23 15:47:46 2015	Fri Jan 23 15:47:54 2015	n		404nm		8		36		Testing new scan sequence
+913	Fri Jan 23 16:14:24 2015	Fri Jan 23 16:14:51 2015	n		404nm		8		36		Testing new scan sequence
+914	Fri Jan 23 16:55:35 2015	Fri Jan 23 16:55:53 2015	n		404nm		8		36		Testing new scan sequence
+915	Fri Jan 23 16:56:00 2015	Fri Jan 23 16:56:14 2015	n		404nm		8		36		Testing new scan sequence
+919	Fri Jan 23 18:03:12 2015	Fri Jan 23 18:03:23 2015	n		404nm		8		36		Testing new scan sequence
+920	Fri Jan 23 18:42:39 2015	Fri Jan 23 18:43:11 2015	n		404nm		8		36		Scan 0.5cm, 8-inch HPD 6s, low intensity, higher frequency (factor of 10)
+921	Fri Jan 23 18:52:11 2015	Fri Jan 23 18:55:14 2015	n		404nm		8		36		Scan 0.5cm, 8-inch HPD 6s, low intensity, higher frequency (factor of 10)
+922	Fri Jan 23 18:55:35 2015	Fri Jan 23 18:58:11 2015	n		404nm		8		36		Scan 0.5cm, 8-inch HPD 6s, low intensity, higher frequency (factor of 10)
+923	Fri Jan 23 19:00:15 2015	Sat Jan 24 02:40:32 2015	n		404nm		8		36		Scan 0.5cm, 8-inch HPD 6s, low intensity, higher frequency (factor of 10)
+924	Sat Jan 24 14:37:48 2015	Sat Jan 24 14:49:00 2015	n		404nm		8		22		Tune attenuation for detailed receiver PMT scan
+925	Sat Jan 24 14:59:32 2015	Sat Jan 24 17:21:10 2015	n		404nm		8		34		2x2cm scan with mm stepsize, 20s measuring time, for detailed receiver PMT profile at center
+926	Sun Jan 25 13:06:13 2015	Sun Jan 25 13:07:34 2015	n		404nm		8		34		8-inch HPD
+927	Sun Jan 25 13:09:31 2015	Sun Jan 25 13:10:54 2015	n		404nm		8		36		8-inch HPD
+928	Sun Jan 25 13:11:41 2015	Sun Jan 25 13:13:05 2015	n		404nm		8		36		8-inch HPD, LV=2.80V
+929	Sun Jan 25 13:13:35 2015	Sun Jan 25 13:14:52 2015	n		404nm		8		36		8-inch HPD, LV=2.75V
+930	Sun Jan 25 13:15:18 2015	Sun Jan 25 13:16:28 2015	n		404nm		8		36		8-inch HPD, LV=2.70V
+931	Sun Jan 25 13:17:06 2015	Sun Jan 25 13:19:17 2015	n		404nm		8		36		8-inch HPD, LV=2.60V
+932	Sun Jan 25 13:19:46 2015	Sun Jan 25 13:20:56 2015	n		404nm		8		36		8-inch HPD, LV=2.50V
+933	Sun Jan 25 13:21:32 2015	Sun Jan 25 13:22:51 2015	n		404nm		8		36		8-inch HPD, LV=2.40V
+934	Sun Jan 25 13:23:29 2015	Sun Jan 25 13:24:52 2015	n		404nm		8		36		8-inch HPD, LV=2.332V
+935	Sun Jan 25 13:25:18 2015	Sun Jan 25 13:26:34 2015	n		404nm		8		36		8-inch HPD, LV=2.30V
+936	Sun Jan 25 13:27:57 2015	Sun Jan 25 13:28:26 2015	y		404nm		8		36		8-inch HPD, LV=2.30V
+937	Sun Jan 25 13:28:54 2015	Sun Jan 25 13:29:30 2015	y		404nm		8		36		8-inch HPD, LV=2.332V
+938	Sun Jan 25 13:30:03 2015	Sun Jan 25 13:30:34 2015	y		404nm		8		36		8-inch HPD, LV=2.40V
+
+939	Sun Jan 25 13:30:55 2015	Sun Jan 25 13:31:26 2015	y		404nm		8		36		8-inch HPD, LV=2.50V
+940	Sun Jan 25 13:34:08 2015	Sun Jan 25 13:34:39 2015	y		404nm		8		36		8-inch HPD, LV=2.60V
+941	Sun Jan 25 13:35:15 2015	Sun Jan 25 13:35:57 2015	y		404nm		8		36		8-inch HPD, LV=2.70V
+942	Sun Jan 25 13:36:29 2015	Sun Jan 25 13:36:58 2015	y		404nm		8		36		8-inch HPD, LV=2.75V
+943	Sun Jan 25 13:37:22 2015	Sun Jan 25 13:37:53 2015	y		404nm		8		36		8-inch HPD, LV=2.80V
+944	Sun Jan 25 13:38:14 2015	Sun Jan 25 13:38:42 2015	y		404nm		8		36		8-inch HPD, LV=2.81V
+945	Fri Feb 20 19:48:54 2015	Fri Feb 20 19:49:12 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, check frequency for frequency scan
+946	Fri Feb 20 19:51:48 2015	Fri Feb 20 19:54:50 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, check frequency for frequency scan
+947	Fri Feb 20 19:54:55 2015	Fri Feb 20 20:08:39 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, check frequency for frequency scan
+948	Fri Feb 20 20:11:49 2015	Fri Feb 20 20:23:32 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, pulser frequency scan
+949	Fri Feb 20 20:24:00 2015	Fri Feb 20 20:32:11 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, pulser frequency scan
+950	Fri Feb 20 20:33:58 2015	Fri Feb 20 20:41:47 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, pulser frequency scan
+951	Fri Feb 20 20:41:57 2015	Fri Feb 20 20:48:32 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, pulser frequency scan
+952	Fri Feb 20 20:49:04 2015	Fri Feb 20 20:53:27 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, pulser frequency scan
+953	Fri Feb 20 20:53:42 2015	Fri Feb 20 21:00:53 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, pulser frequency scan
+954	Fri Feb 20 21:01:15 2015	Fri Feb 20 21:06:25 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, pulser frequency scan
+955	Fri Feb 20 21:06:41 2015	Fri Feb 20 21:11:45 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, pulser frequency scan
+956	Fri Feb 20 21:12:01 2015	Fri Feb 20 21:14:43 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, pulser frequency scan
+957	Fri Feb 20 21:15:11 2015	Fri Feb 20 21:19:26 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, pulser frequency scan
+958	Fri Feb 20 21:19:36 2015	Fri Feb 20 21:22:07 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, pulser frequency scan
+959	Fri Feb 20 21:22:26 2015	Fri Feb 20 21:27:48 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, pulser frequency scan
+961	Mon Feb 23 14:09:06 2015	Mon Feb 23 14:18:11 2015	n		404nm		8		36		8-inch HPD, LV=2.8V, gain stability check
+963	Mon Feb 23 16:18:22 2015	Mon Feb 23 16:53:51 2015	n		404nm		8		36		testing V1730
+964	Mon Feb 23 17:09:29 2015	Mon Feb 23 20:36:12 2015	n		404nm		8		28		Scan 0.5cm, 8-inch HPD 6s, low intensity, with V1730 digitizer for timing resolution Scan Test
+965	Tue Feb 24 11:28:14 2015	Tue Feb 24 11:32:33 2015	n		404nm		8		28		8-inch HPD, LV=2.81V, with V1730 digitizer for timing resolution 
+966	Tue Feb 24 11:34:16 2015	Tue Feb 24 11:38:38 2015	n		404nm		8		28		8-inch HPD, LV=2.80V, with V1730 digitizer for timing resolution 
+967	Tue Feb 24 11:40:24 2015	Tue Feb 24 11:44:48 2015	n		404nm		8		28		8-inch HPD, LV=2.70V, with V1730 digitizer for timing resolution 
+968	Tue Feb 24 11:47:45 2015	Tue Feb 24 11:53:14 2015	n		404nm		8		28		8-inch HPD, LV=2.60V, with V1730 digitizer for timing resolution 
+969	Tue Feb 24 11:56:16 2015	Tue Feb 24 12:03:46 2015	n		404nm		8		28		8-inch HPD, LV=2.50V, with V1730 digitizer for timing resolution 
+970	Tue Feb 24 12:05:31 2015	Tue Feb 24 12:09:57 2015	n		404nm		8		28		8-inch HPD, LV=2.40V, with V1730 digitizer for timing resolution 
+971	Tue Feb 24 12:13:10 2015	Tue Feb 24 12:17:33 2015	n		404nm		8		28		8-inch HPD, LV=2.30V, with V1730 digitizer for timing resolution 
+972	Tue Feb 24 12:26:12 2015	Tue Feb 24 12:31:06 2015	n		404nm		8		28		8-inch HPD, LV=2.80V, gain stability check
+973	Thu Feb 26 17:36:17 2015	Fri Feb 27 00:33:44 2015	n		404nm		8		30		First run with 20" SK PMT
+980	Fri Feb 27 00:57:57 2015	Fri Feb 27 00:59:12 2015	n		404nm		8		30		Test scan with 20in PMT, 6s, full grid, 5mm
+981	Fri Feb 27 01:03:11 2015	Fri Feb 27 01:04:09 2015	n		404nm		8		30		Test scan with 20in PMT, 6s, full grid, 5mm
+982	Fri Feb 27 01:04:53 2015	Fri Feb 27 14:29:12 2015	n		404nm		8		30		Test scan with 20in PMT, 6s, full grid, 5mm
+983	Fri Feb 27 17:00:59 2015	Fri Feb 27 17:04:01 2015	n		404nm		8		25		Test scan with 20in PMT, 6s, full grid, 5mm, Coils ON, double giron layer
+984	Fri Feb 27 17:05:32 2015	Fri Feb 27 17:06:09 2015	n		404nm		8		25		Test PMT voltage
+985	Fri Feb 27 17:08:32 2015	Fri Feb 27 17:15:03 2015	n		404nm		8		25		Test PMT voltage
+986	Fri Feb 27 17:15:41 2015	Sun Mar  1 01:53:47 2015	n		404nm		8		25		Test scan with 20in PMT, 6s, full grid, 5mm, Coils ON, double giron layer
+987	Sun Mar  1 16:57:27 2015	Sun Mar  1 23:53:42 2015	n		404nm		8		25		Test scan with 20in PMT, 6s, full grid, 1cm, Coils ON, double giron layer

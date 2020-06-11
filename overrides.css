@@ -1,0 +1,29 @@
+input[type=number] {
+	color: #444444;
+	font-size: inherit;
+	padding:0.25em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	border:1px solid #808080;
+	border-radius: 5px;
+	margin-bottom:1px;
+    width: 5em;
+    transition: .5s;
+
+    background: #f5f5f5;
+    background: linear-gradient(to bottom, #c0c0c0 0%, #f5f5f5 100%);
+}
+
+progress {
+    width: 100%;
+    max-width: 50em;
+}
+
+.unit, th span.unit {
+    font-weight: 100;
+    font-style: italic;
+}
+
+table.numeric td, th {
+    text-align: right;
+}

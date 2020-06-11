@@ -1,0 +1,39 @@
+a, button {
+    display:list-item;
+    margin:10px 0;
+}
+
+a.button, button.btn {
+    color: #6e6e6e;
+    font: bold 12px Helvetica, Arial, sans-serif;
+    text-decoration: none;
+    padding: 7px 12px;
+    position: relative;
+    display: inline-block;
+    background: #f3f3f3;
+    border: solid 1px #dcdcdc;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    margin-right: 10px;
+}
+
+
+a.red, button.red {
+    color:#fff;
+    background: red;
+}
+
+a.green, button.green {
+    background: #7FFF24;
+}
+
+
+
+.slidethreshold {} 
+
+
+#div_top {;height:25px;width:50px;float:left;background-color:#FFD700 } 
+#div_dest {;height:25px;width:50px;float:left;background-color:#FFD700 } 
+
+#div_phonon_tot {background-color:#EEEEEE;height:25px;width:100px;float:left; } 
+

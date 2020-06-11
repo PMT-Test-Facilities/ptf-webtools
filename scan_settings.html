@@ -1,0 +1,498 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 TRANSITIONAL//EN">
+<html><head>
+<title>Scan Settings</title>
+<link rel="stylesheet" href="buttons2.css" media="screen" /> 
+
+<script type="text/javascript">
+$("a").hover(function(e) {
+    $($(this).data("tooltip")).css({
+        left: e.pageX + 1,
+        top: e.pageY + 1
+    }).stop().show(100);
+}, function() {
+    $($(this).data("tooltip")).hide();
+});
+</script>
+<script type="text/javascript" src="../mhttpd.js"></script>
+<script type="text/javascript" src="../obsolete.js"></script>
+
+
+<script>
+var mongodb = require('mongodb');
+    var server = new mongodb.Server("127.0.0.1", 27017, {});
+    new mongodb.Db('test', server, {}).open(function (error, client) {
+      if (error) throw error;
+      var collection = new mongodb.Collection(client, 'test_collection');
+      collection.find({}, {limit:10}).toArray(function(err, docs) {
+        console.dir(docs);
+      });
+    });
+</script>
+<!-- Function to call periodically  -->
+<script>
+window.setInterval("Refresh()",2000);
+function fixedPrecision(value){
+  return Math.round(value*1000)/1000;
+}
+function Refresh() {
+
+  var start = new Date().getTime();
+
+  var req = new Array()
+  req[0] = "/Equipment/Scan/Variables/NPoints"
+  req[1] = "/Equipment/Scan/Variables/Current Point"
+  
+  var result = ODBMGet(req);
+  document.getElementById("nscanpoints").innerHTML = result[0];
+  document.getElementById("currentpoint").innerHTML = result[1];
+
+
+
+  <!-- Check the feSCAN messages -->
+  var mess = ODBGetMsg(100000) <!-- look through the last 100000 messages -->
+  var innerhtml = "<font size=-2><ul>"
+  for (var i = 0; i < mess.length; i++) {
+    if(mess[i]!=""){
+      if(mess[i].search("feSCAN") != -1){
+	 if(mess[i].search("ERROR]") == -1){
+           innerhtml += "<li>" + mess[i]  + "</li>"
+         }else{
+           innerhtml += "<li> <font color=\"red\" >" + mess[i]  + "</font></li>"
+         }
+      } 
+    } 
+  }
+  innerhtml += "</ul></font>"
+ <!-- BUT ONLY PRINT THE LAST 20 message: ToDo !!!-->
+  document.getElementById("mmessages").innerHTML = innerhtml;
+  
+  var end = new Date().getTime();
+  var time = end - start;
+  document.getElementById("exectime").innerHTML = time
+}
+</script>
+
+<!-- Function to check numeric value  -->
+
+<script>
+function checkInput(value){
+  var tested = parseFloat(value);
+  if(isNaN(tested)){
+    tested = 0.0;
+    alert("Please enter numeric value");
+  }
+  return tested;
+}
+
+
+<!-- Function to update destination values  -->
+function updateGenPar(field,name) {
+var odb_setting = "/Equipment/Scan/Settings/" + name;
+ODBSet(odb_setting,field.value);
+}
+
+function updateCylPar(field,name) {
+var odb_setting = "/Equipment/Scan/Settings/CylinderParams/" + name;
+ODBSet(odb_setting,field.value);
+}
+
+function resetDefaultCylPar(){
+ODBSet("/Equipment/Scan/Settings/CylinderParams/height",0.53);
+ODBSet("/Equipment/Scan/Settings/CylinderParams/radius",0.3);
+ODBSet("/Equipment/Scan/Settings/CylinderParams/arc_step",0.2);
+ODBSet("/Equipment/Scan/Settings/CylinderParams/loop_separation",0.1);
+ODBSet("/Equipment/Scan/Settings/CylinderParams/layer_thickness",0.1);
+ODBSet("/Equipment/Scan/Settings/CylinderParams/x_center",0.3);
+ODBSet("/Equipment/Scan/Settings/CylinderParams/y_center",0.305);
+}
+
+function updateRectPar(field,name) {
+var odb_setting = "/Equipment/Scan/Settings/RectangularParams/" + name;
+ODBSet(odb_setting,field.value);
+}
+
+function resetDefaultRectPar(){
+ODBSet("/Equipment/Scan/Settings/RectangularParams/prism_height_z",0.53);
+var elem = document.getElementById("rect_inp_height");
+elem.value = 0.53;
+ODBSet("/Equipment/Scan/Settings/RectangularParams/prism_length_x",0.647);
+elem = document.getElementById("rect_inp_length");
+elem.value = 0.647;
+ODBSet("/Equipment/Scan/Settings/RectangularParams/prism_width_y",0.666);
+elem = document.getElementById("rect_inp_width");
+elem.value = 0.666;
+ODBSet("/Equipment/Scan/Settings/RectangularParams/x_step",0.04);
+elem = document.getElementById("rect_inp_xstep");
+elem.value = 0.04;
+ODBSet("/Equipment/Scan/Settings/RectangularParams/y_step",0.04);
+elem = document.getElementById("rect_inp_ystep");
+elem.value = 0.04;
+ODBSet("/Equipment/Scan/Settings/RectangularParams/z_step",0.05);
+elem = document.getElementById("rect_inp_zstep");
+elem.value = 0.05;
+ODBSet("/Equipment/Scan/Settings/RectangularParams/init_pos_x",0.);
+elem = document.getElementById("rect_inp_x");
+elem.value = 0.;
+ODBSet("/Equipment/Scan/Settings/RectangularParams/init_pos_y",0.);
+elem = document.getElementById("rect_inp_y");
+elem.value = 0.;
+ODBSet("/Equipment/Scan/Settings/RectangularParams/init_pos_z",0.);
+elem = document.getElementById("rect_inp_z");
+elem.value = 0.;
+ODBSet("/Equipment/Scan/Settings/RectangularParams/init_tilt",0.);
+elem = document.getElementById("rect_inp_tilt");
+elem.value = 0.;
+ODBSet("/Equipment/Scan/Settings/RectangularParams/init_rotation",-90.);
+elem = document.getElementById("rect_inp_rot");
+elem.value = -90.;
+}
+
+function updateAlignPar(field,name) {
+var odb_setting = "/Equipment/Scan/Settings/AlignmentParams/" + name;
+ODBSet(odb_setting,field.value);
+}
+</script>
+
+<script> 
+function ShowParams() {
+   var scan_type = document.getElementById("SelectScan").value;
+   <!--document.getElementById("params").innerHTML = "You chose: " + scan_type; -->
+
+   switch (scan_type) {
+      case "Cylinder":
+        ODBSet("/Equipment/Scan/Settings/ScanType",0);
+        document.getElementById("params").style.display ="none";
+        document.getElementById("CylParams").style.display = "block";
+        document.getElementById("PMTsurfaceParams").style.display = "none"; 
+        document.getElementById("RectParams").style.display ="none";
+        document.getElementById("AlignParams").style.display ="none";
+        document.getElementById("PassByParams").style.display = "none";
+        break;
+     case "Rectangular":
+        ODBSet("/Equipment/Scan/Settings/ScanType",1);
+        document.getElementById("params").style.display ="none";
+        document.getElementById("RectParams").style.display = "block";
+        document.getElementById("PMTsurfaceParams").style.display = "none";
+        document.getElementById("CylParams").style.display ="none";
+        document.getElementById("AlignParams").style.display ="none";
+        document.getElementById("PassByParams").style.display = "none";
+        break;
+     case "Alignment":
+        ODBSet("/Equipment/Scan/Settings/ScanType",2);
+        document.getElementById("params").style.display ="none";
+        document.getElementById("AlignParams").style.display = "block";
+        document.getElementById("PMTsurfaceParams").style.display = "none";  
+        document.getElementById("RectParams").style.display ="none";
+        document.getElementById("CylParams").style.display ="none"; 
+        document.getElementById("PassByParams").style.display = "none";
+        break;
+     case "Pass_by":
+        ODBSet("/Equipment/Scan/Settings/ScanType",3);
+        document.getElementById("params").style.display ="none";
+        document.getElementById("PassByParams").style.display = "block";
+        document.getElementById("PMTsurfaceParams").style.display = "none";
+        document.getElementById("RectParams").style.display ="none";
+        document.getElementById("CylParams").style.display ="none"; 
+        document.getElementById("AlignParams").style.display ="none";
+        break;
+     case "PMT Surface":
+        ODBSet("/Equipment/Scan/Settings/ScanType",1);
+        document.getElementById("params").style.display ="none";
+        document.getElementById("RectParams").style.display = "none";
+        document.getElementById("PMTsurfaceParams").style.display = "block";
+        document.getElementById("CylParams").style.display ="none";
+        document.getElementById("AlignParams").style.display ="none";
+        document.getElementById("PassByParams").style.display = "none";
+        break;
+     case "Reflectivity":
+        ODBSet("/Equipment/Scan/Settings/ScanType",7);
+        document.getElementById("params").innerHTML = scan_type + " mode not yet implemented";
+        document.getElementById("RectParams").style.display ="none";
+        document.getElementById("PMTsurfaceParams").style.display = "none";
+        document.getElementById("CylParams").style.display ="none"; 
+        document.getElementById("AlignParams").style.display ="none";
+        document.getElementById("PassByParams").style.display = "none";
+        break;
+     case "Manual":
+        ODBSet("/Equipment/Scan/Settings/ScanType",5);
+        document.getElementById("params").innerHTML = scan_type + " mode not yet implemented";
+        document.getElementById("RectParams").style.display ="none";
+        document.getElementById("PMTsurfaceParams").style.display = "none";
+        document.getElementById("CylParams").style.display ="none"; 
+        document.getElementById("AlignParams").style.display ="none";
+        document.getElementById("PassByParams").style.display = "none";
+        break;
+     case "Demo":
+        ODBSet("/Equipment/Scan/Settings/ScanType",6);
+        document.getElementById("params").innerHTML = scan_type + " mode not yet implemented";
+        document.getElementById("RectParams").style.display ="none";
+        document.getElementById("PMTsurfaceParams").style.display = "none";
+        document.getElementById("CylParams").style.display ="none"; 
+        document.getElementById("AlignParams").style.display ="none";
+        document.getElementById("PassByParams").style.display = "none";
+        break;
+      default:
+        document.getElementById("params").style.display ="none";
+        document.getElementById("RectParams").style.display ="none";
+        document.getElementById("PMTsurfaceParams").style.display = "none";
+        document.getElementById("CylParams").style.display ="none"; 
+        document.getElementById("AlignParams").style.display ="none";
+        document.getElementById("PassByParams").style.display = "none";
+        break;
+   }
+}
+</script>
+
+
+<script> 
+function SetSubType() {
+   var scan_sub_type = document.getElementById("SelectSubType").value;
+   <!--document.getElementById("params").innerHTML = "You chose: " + scan_type; -->
+
+   switch (scan_sub_type) {
+      case "Default":
+        ODBSet("/Equipment/Scan/Settings/RectangularParams/SubType",0);
+        break;
+      case "Monitor reference":
+        ODBSet("/Equipment/Scan/Settings/RectangularParams/SubType",1);
+        break;
+      case "Normal incidence":
+        ODBSet("/Equipment/Scan/Settings/RectangularParams/SubType",2);
+        break;
+      default:
+        break;
+    }
+}
+
+function ShowPosSetting(){
+   var pos_opt = document.getElementById("SelectPos").value;
+   switch (pos_opt){
+     case "PosX":
+       optionalHTML = "<label>Gantry X (m): </label> <input type=\"text\" name=\"init_pos[0]\" onchange=\"updatePassByPar(this,this.name)\"> <br>";
+       break;
+     case "PosY":
+       optionalHTML = "<label>Gantry Y (m): </label> <input type=\"text\" name=\"init_pos[2]\" onchange=\"updatePassByPar(this,this.name)\"> <br>";
+       break;
+     case "PosZ":
+       optionalHTML = "<label>Gantry Z (m): </label> <input type=\"text\" name=\"init_pos[3]\" onchange=\"updatePassByPar(this,this.name)\"> <br>";
+       break;
+     case "PosZ":
+       optionalHTML = "<label>Gantry Z (m): </label> <input type=\"text\" name=\"init_pos[3]\" onchange=\"updatePassByPar(this,this.name)\"> <br>";
+       break;
+     case "PosZ":
+       optionalHTML = "<label>Gantry Z (m): </label> <input type=\"text\" name=\"init_pos[3]\" onchange=\"updatePassByPar(this,this.name)\"> <br>";
+       break;
+     default:
+       optionalHTML = "";
+       break;
+   }
+
+   document.getElementById("PositionOpts").innerHTML = optionalHTML;
+}
+
+
+
+
+
+</script>
+
+<style>
+label{
+  width: 325px;
+  height: 25px;
+  display: inline-block;
+  float: left;
+  clear: left;
+ }
+input{
+   width: 100px;
+   height: 25px;
+   display: inline-block;
+   float: left;
+}
+</style>
+
+</head>
+
+
+
+<!-- ----------------- BODY ------------->  
+<body onload="Refresh();">
+
+<div id="container" style="">
+
+<div id="header" style="background-color:#FFA500;">
+<h1 style="margin-bottom:0;">Scan Settings</h1>
+</div>
+
+<div id="menu" style="background-color:#FFD700;height:800px;width:450px;float:left;">
+
+<!-- This works because it's a form. The details are in mhttpd.cxx -->
+<form name="form1" method="Get">
+    <tr><td width="50%">
+	<input value="Status"    name="cmd" type="submit">
+	<input value="ODB"       name="cmd" type="submit">
+	<input value="History"   name="cmd" type="submit">
+    </td> </tr>
+    <br>
+    <br>
+</tr>
+</form>
+
+
+<b>Settings for the preferred measurement sequence</b><br>
+
+<!--- Note: variables can only be shown once! --->
+<form>
+Select scan type 
+<select id="SelectScan" onchange="ShowParams()">
+  <option value=""></option>
+  <option value="Cylinder">Cylinder </option>
+  <option value="Rectangular">Rectangular </option>
+  <option value="Alignment">Alignment </option>
+  <option value="Pass_by">Pass by </option>
+  <option value="PMT Surface">PMT Surface </option>
+  <option value="Reflectivity">Reflectivity </option>
+  <option value="Manual">Manual </option>
+  <option value="Demo">Demo </option>
+</select>
+<label>Measurement time at each point(ms): </label><input type="text" id="inp_time" name="meas_time" value="1000" onchange="updateGenPar(this,this.name)"> <br>
+<br><br>
+<li>Number of scan points: <span id="nscanpoints"></span></li>
+<li>Current scan point: <span id="currentpoint"></span></li>
+</form>
+
+<p id="params"> </p>
+Params:
+<br>
+<form>
+<div id="CylParams" style="display:none"> 
+<button type="button" onclick="resetDefaultCylPar()" id="reset_cyl">Reset to Default</button>
+<br> <br>
+<label>Height: </label> <input type="text" name="height" value="0.53" onchange="updateCylPar(this,this.name)"> <br>
+<label>Radius:  </label><input type="text" name="radius" value="0.3" onchange="updateCylPar(this,this.name)"> <br>
+<label>Arc Step: </label><input type="text" name="arc_step" value="0.2" onchange="updateCylPar(this,this.name)"> <br>
+<label>Loop Separation: </label><input type="text" name="loop_separation" value="0.1" onchange="updateCylPar(this,this.name)"> <br>
+<label>Layer Thickness: </label><input type="text" name="layer_thickness" value="0.1" onchange="updateCylPar(this,this.name)"> <br>
+<label>X center: </label><input type="text" name="x_center" value="0.3" onchange="updateCylPar(this,this.name)"> <br>
+<label>Y center: </label><input type="text" name="y_center" value="0.305" onchange="updateCylPar(this,this.name)"> <br>
+<br>
+</div>
+</form>
+
+
+<form>
+<div id="RectParams" style="display:none">
+<button type="button" onclick="resetDefaultRectPar()" id="reset_cyl">Reset to Default</button>
+<br> <br>
+Subtype:
+<select id="SelectSubType" onchange="SetSubType()">
+  <option value="Default">Default</option>
+  <option value="Monitor reference">Monitor Reference point </option>
+  <option value="Normal incidence">Normal Incidence </option>
+</select>
+<br> <br>
+<label>Prism Height Z (set to 0 to keep fixed): </label> <input type="text" id="rect_inp_height" name="prism_height_z" value="0.54" onchange="updateRectPar(this,this.name)"> <br>
+<label>Prism Length X (set to 0 to keep fixed):  </label><input type="text" id="rect_inp_length" name="prism_length_x" value="0.647" onchange="updateRectPar(this,this.name)"> <br>
+<label>Prism Width Y (set to 0 to keep fixed): </label><input type="text" id="rect_inp_width" name="prism_width_y" value="0.666" onchange="updateRectPar(this,this.name)"> <br>
+<label>Stepsize X (>= 0.001 m): </label><input type="text" id="rect_inp_xstep" name="x_step" value="0.04" onchange="updateRectPar(this,this.name)"> <br>
+<label>Stepsize Y  (>= 0.001 m): </label><input type="text" id="rect_inp_ystep" name="y_step" value="0.04" onchange="updateRectPar(this,this.name)"> <br>
+<label>Stepsize Z  (>= 0.001 m): </label><input type="text" id="rect_inp_zstep" name="z_step" value="0.05" onchange="updateRectPar(this,this.name)"> <br>
+<label>Initial Position X: </label><input type="text" id="rect_inp_x" name="init_pos_x" value="0." onchange="updateRectPar(this,this.name)"> <br>
+<label>Initial Position Y: </label><input type="text" id="rect_inp_y" name="init_pos_y" value="0." onchange="updateRectPar(this,this.name)"> <br>
+<label>Initial Position Z: </label><input type="text" id="rect_inp_z" name="init_pos_z" value="0." onchange="updateRectPar(this,this.name)"> <br>
+<label>Fixed Tilt Angle: </label><input type="text" id="rect_inp_tilt" name="init_tilt" value="0." onchange="updateRectPar(this,this.name)"> <br>
+<label>Fixed Rotation Angle: </label><input type="text" id="rect_inp_rot" name="init_rotation" value="-90." onchange="updateRectPar(this,this.name)"> <br>
+<label>Which Gantry to use for scan(2=both): </label><input type="text" id="rect_inp_which_g" name="which_gantry" value="2" onchange="updateRectPar(this,this.name)"> <br>
+<br>
+</div>
+</form> 
+
+<form>
+<div id="AlignParams" style="display:none"> 
+<button type="button" onclick="resetDefaultAlignPar()" id="reset_align">Reset to Default</button>
+<br><br>
+<label>Gantry0 initial X (m): </label> <input type="text" name="init_pos[0]" value="0.1" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Gantry0 initial Y (m): </label> <input type="text" name="init_pos[1]" value="0.3" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Gantry0 initial Z (m): </label> <input type="text" name="init_pos[2]" value="0.2" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Gantry0 rotation (deg): </label> <input type="text" name="init_pos[3]" value="0." onchange="updateAlignPar(this,this.name)"> <br>
+<label>Gantry0 tilt (deg): </label> <input type="text" name="init_pos[4]" value="0." onchange="updateAlignPar(this,this.name)"> <br>
+<label>Gantry1 initial X (m): </label> <input type="text" name="init_pos[5]" value="0.647" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Gantry1 initial Y (m): </label> <input type="text" name="init_pos[6]" value="0.3" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Gantry1 initial Z (m): </label> <input type="text" name="init_pos[7]" value="0.2" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Gantry1 rotation (deg): </label> <input type="text" name="init_pos[8]" value="0." onchange="updateAlignPar(this,this.name)"> <br>
+<label>Gantry1 tilt (deg): </label> <input type="text" name="init_pos[9]" value="0." onchange="updateAlignPar(this,this.name)"> <br>
+<label>Delta rotation (deg): </label> <input type="text" name="delta_rotation" value="3" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Delta tilt: </label> <input type="text" name="delta_tilt" value="3" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Step size rotation: </label> <input type="text" name="step_rotation" value="0.5" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Step size tilt: </label> <input type="text" name="step_tilt" value="0.5" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Grid length: </label> <input type="text" name="grid_length" value="0.05" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Grid width: </label> <input type="text" name="grid_width" value="0.05" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Step size grid length: </label> <input type="text" name="step_length" value="0.001" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Step size grid width: </label> <input type="text" name="step_width" value="0.001" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Gantry with laser: </label> <input type="text" name="gantry_laser" value="0" onchange="updateAlignPar(this,this.name)"> <br>
+<br>
+</div>
+</form>
+
+<form>
+<div id="PassByParams" style="display:none"> 
+<button type="button" onclick="resetDefaultPassByPar()" id="reset_passby">Reset to Default</button>
+<br><br>
+Choose position for gantry with laser (only 1D!):<br>
+<select id="SelectPos" onchange="ShowPosSetting()">
+  <option value=""></option>
+  <option value="PosX">X position </option>
+  <option value="PosY">Y position </option>
+  <option value="PosZ">Z position </option>
+  <option value="Rotation">Rotation angle </option>
+  <option value="Tilt">Tilt angle </option>
+</select>
+<br>
+<div id="PositionOpts">
+</div>
+<label>iterations: </label> <input type="text" name="iterations" value="20" onchange="updateAlignPar(this,this.name)"> <br>
+<label>Gantry with laser: </label> <input type="text" name="Height" value="0" onchange="updateAlignPar(this,this.name)"> <br>
+<br>
+</div>
+</form>
+
+<form>
+<div id="PMTsurfaceParams" style="display:none">
+<button type="button" onclick="resetDefaultRectPar()" id="reset_cyl">Reset to Default</button>
+<br> <br>
+<label>Prism Height Z (set to 0 to keep fixed): </label> <input type="text" id="rect_inp_height" name="prism_height_z" value="0.54" onchange="updateRectPar(this,this.name)"> <br>
+<label>Prism Length X (set to 0 to keep fixed):  </label><input type="text" id="rect_inp_length" name="prism_length_x" value="0.647" onchange="updateRectPar(this,this.name)"> <br>
+<label>Prism Width Y (set to 0 to keep fixed): </label><input type="text" id="rect_inp_width" name="prism_width_y" value="0.666" onchange="updateRectPar(this,this.name)"> <br>
+<label>Stepsize X (>= 0.001 m): </label><input type="text" id="rect_inp_xstep" name="x_step" value="0.04" onchange="updateRectPar(this,this.name)"> <br>
+<label>Stepsize Y  (>= 0.001 m): </label><input type="text" id="rect_inp_ystep" name="y_step" value="0.04" onchange="updateRectPar(this,this.name)"> <br>
+<label>Stepsize Z  (>= 0.001 m): </label><input type="text" id="rect_inp_zstep" name="z_step" value="0.05" onchange="updateRectPar(this,this.name)"> <br>
+<label>Initial Position X: </label><input type="text" id="rect_inp_x" name="init_pos_x" value="0." onchange="updateRectPar(this,this.name)"> <br>
+<label>Initial Position Y: </label><input type="text" id="rect_inp_y" name="init_pos_y" value="0." onchange="updateRectPar(this,this.name)"> <br>
+<label>Initial Position Z: </label><input type="text" id="rect_inp_z" name="init_pos_z" value="0." onchange="updateRectPar(this,this.name)"> <br>
+<label>Fixed Tilt Angle: </label><input type="text" id="rect_inp_tilt" name="init_tilt" value="0." onchange="updateRectPar(this,this.name)"> <br>
+<label>Fixed Rotation Angle: </label><input type="text" id="rect_inp_rot" name="init_rotation" value="-90." onchange="updateRectPar(this,this.name)"> <br>
+<label>Which Gantry to use for scan(2=both): </label><input type="text" id="rect_inp_which_g" name="which_gantry" value="2" onchange="updateRectPar(this,this.name)"> <br>
+<br>
+</div>
+</form>
+</div>
+
+<div id="content" style=";height:500px;width:600px;float:left;">
+<!--<div id="empty" style="height:450px;visibility:hidden"> </div> -->
+
+<b>  MIDAS Messages (feSCAN only)  </b>
+<p id="mmessages"></p>
+
+</div>
+
+<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+<p>Last updated:</p>
+<p id="datetime"></p>
+<p>Javascript executed in <span id="exectime"></span> ms. </p>
+</div>
+
+</body>
+</html>
+
+

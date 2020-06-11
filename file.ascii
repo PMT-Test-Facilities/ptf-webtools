@@ -1,0 +1,8 @@
+[/Custom]
+Gantry Move = STRING : [100] /home1/midptf/online/custom/move_control.html
+GantrySlow = STRING : [120] /home1/midptf/online/custom/move_control_slow.html
+XmlRequest = STRING : [128] /home1/midptf/online/custom/example.html
+XmlRequest2 = STRING : [128] /home1/midptf/online/custom/example2.html
+example1 = STRING : [128] /home1/midptf/online/custom/dvtest.html
+dv test2 = STRING : [41] /home1/midptf/online/custom/dvtest2.html
+

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8" />
+
+    <title>Annotated MIDAS Messages</title>
+
+    <style>
+      
+      
+      a.tooltip {
+      position: relative;
+      }	
+      
+      a.tooltip span {
+      font-family: arial, sans-serif;	
+      font-size: 10px;
+      font-weight: bold;
+      position:absolute;
+      z-index: 999;
+      white-space:nowrap;
+      bottom:9999px;
+      left: 50%;
+      background:#000;
+      color:#e0e0e0;
+      padding:0px 7px;
+      line-height: 24px;
+      height: 24px;
+      
+      opacity: 0;	
+      -webkit-transition:opacity 0.4s ease-out;  
+      -moz-transition:opacity 0.4s ease-out;  
+      -o-transition:opacity 0.4s ease-out;  
+      transition:opacity 0.4s ease-out; 
+      }		
+      
+      a.tooltip span::before {
+      content: "";
+      display: block;
+      border-left: 6px solid #000000;
+      border-top: 6px solid transparent;
+      position: absolute;
+      top: -6px;
+      left: 0px;
+      }
+      
+      a.tooltip:hover span {
+      opacity: 1;
+      bottom:-35px;
+      }			
+    </style>
+    
+    
+<script type="text/javascript" src="../mhttpd.js"></script>
+
+<!-- Function to call peridically  -->
+<script>
+window.setInterval("Refresh()",2000);
+function Refresh() {
+
+  var start = new Date().getTime();
+  var req = new Array();
+  req[0]= "/Equipment/Move/Control/Destination[0]"
+  var result = ODBMGet(req);
+
+
+  <!-- Check the current messages -->
+  var mess = ODBGetMsg(20)
+  var innerhtml = "<font size=-2><ul>"
+  for (var i = 0; i < mess.length; i++) {
+    if(mess[i]!=""){
+      if(mess[i].search("ERROR]") != -1){
+        innerhtml += "<li><a href='http://www.google.com' style='color: red; text-decoration: none;' class='tooltip'>" + mess[i]  + "<span>You got an error; click link for help!</span></a></li>"
+      }else if(mess[i].search("Program feMove on host midptf01 stopped") != -1) {
+        innerhtml += "<li> <a href='http://news.bbc.co.uk' style='color: blue; text-decoration: none;' class='tooltip'>" + mess[i]  + "<span>You stopped feMove; I hope you know what you are doing!</span></li>"
+
+      }else if(mess[i].search("Move command") != -1){
+	innerhtml += "<li> <a class='tooltip'> " + mess[i] + " <span> Motor is moving. </span> </a></li>"
+      } else {
+	innerhtml += "<li> <font color='black' >" + mess[i]  + "</font></li>"
+      }
+    } 
+  }
+
+  innerhtml += "</ul></font>"
+  document.getElementById("mmessages").innerHTML = innerhtml;
+  
+  var end = new Date().getTime();
+  var time = end - start;
+  document.getElementById("exectime").innerHTML = time
+}
+</script>
+<!-- Function to call when buttons are pushed  -->
+
+</head>
+
+
+
+<!-- ----------------- BODY ------------->  
+<body onload="Refresh();">
+
+
+<div id="container" style="">
+
+<div id="header" style="background-color:#FFA500;">
+<h1 style="margin-bottom:0;">PTF MIDAS Messages</h1>
+</div>
+
+<div id="menu" style="background-color:#FFD700;height:400px;width:150px;float:left;">
+<b>Gantry Status</b><br>
+<ul>
+<li id="gantry_moving"></li>
+</ul>
+</div>
+
+
+<div id="content" style=";height:400px;width:800px;float:left;">
+
+<b>MIDAS Messages</b>
+<p id="mmessages"></p>
+
+</div>
+
+<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+<p>Last updated:</p>
+<p id="datetime"></p>
+<p>Javascript executed in <span id="exectime"></span> ms. </p>
+</div>
+
+</div>
+
+</body>
+</html>
+
+

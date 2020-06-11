@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html><head>
+<link rel="icon" href="favicon.png" type="image/png" />
+<link rel="stylesheet" href="mhttpd.css" type="text/css" />
+<!--
+<meta http-equiv="Refresh" content="30">
+-->
+<title>MIDAS messages</title>
+
+<script type="text/javascript" src="../mhttpd.js"></script>
+
+<script>
+
+// extracting ODB configuration
+var res = ODBGetRecord('/AnnMessage')
+array = res.split('\n')
+
+var o = []; var n=-1; var key, val;
+for (var i = 0; i<array.length; i++) {
+  if(array[i]) {
+    if(array[i].search('stringToMatch') == 0) {n++; o[n] = {}}
+    key = array[i].slice(0,array[i].indexOf(':'))
+    val = array[i].slice(array[i].indexOf(':')+1)
+    o[n][key] = val
+  }
+}
+var markup_definitions = o
+
+// Analyze query string
+
+var qry = location.search
+var nlines = 20
+var filter = ''
+
+
+if (qry) {
+  var mres
+
+  // number of lines
+  mres = qry.match(/lines=(\d+)/)
+  if(mres && mres.length>=2) nlines = parseInt(mres[1])
+  if (nlines>1000)    nlines = 1000
+
+  // filter string
+  mres = qry.match(/filter=(\w{2,})/)
+  if(mres && mres.length>=2) filter=mres[1]
+}
+
+// Function to call peridically
+window.setInterval("Refresh()",30000);
+
+function Refresh() {
+
+  var start = new Date().getTime();
+
+  // Check the current messages
+  var mess = ODBGetMsg(nlines)
+  var innerhtml = ""
+  for (var i = 0; i < mess.length; i++) {
+    if(filter && mess[i].search(filter)<0) continue
+
+    var found = false;
+    for (var j = 0; j < markup_definitions.length; j++) {
+      dfn = markup_definitions[j]
+      if(mess[i].search(dfn.stringToMatch)>=0) {
+         innerhtml += "<li><a class='tooltip' "
+         if (dfn.hasOwnProperty("tooltip"))   innerhtml+="title='"+dfn.tooltip+"' "
+         if (dfn.hasOwnProperty("textColor")) innerhtml+="style='text-decoration:none; color:"+dfn.textColor+";' "
+         if (dfn.hasOwnProperty("link"))      innerhtml+="href='"+dfn.link+"' "
+         innerhtml+=">"+mess[i]+"</a></li>"
+
+         found = true
+         break
+      }
+    }
+
+    if(!found) innerhtml += "<li> <font color='black' >" + mess[i]  + "</font></li>"
+  }
+
+  // Test area
+  //innerhtml+=qry+" "+nlines+" "+filter
+
+
+  document.getElementById("mmessages").innerHTML = innerhtml;
+
+  // datetime stamp
+  document.getElementById("date-time").innerHTML = new Date().toLocaleString() 
+
+  //  processing time  
+  var end = new Date().getTime();
+  var time = end - start;
+  document.getElementById("exectime").innerHTML = time
+
+ // fill control form
+ //document.getElementsByName("lines")[0].value = nlines
+ //document.getElementsByName("filter")[0].value = filter
+ document.controls.lines.value = nlines
+ document.controls.filter.value = filter
+}
+
+function ApplyAction(form) {
+  var lines = form.lines.value;
+  var filt  = form.filter.value;
+  var qry = ""
+  if(lines) {
+    qry += qry ? "&" : "?"
+    qry += "lines="+lines
+  }
+  if(filt) {
+    qry += qry ? "&" : "?"
+    qry += "filter="+filt
+  }
+  location.search = qry
+}
+</script>
+
+</head>
+
+
+<body onload="Refresh();">
+
+<table columns=2 border=3 cellpadding=2>
+<tr><th bgcolor=#A0A0FF>MIDAS experiment "<odb src="/Experiment/Name">"<th bgcolor=#A0A0FF><span id=date-time><span>
+</tr>
+<tr><td bgcolor=#C0C0C0>
+<table columns=2 cellpadding=0><tr><td>
+<form method="GET" action=".">
+<input type=submit name=cmd value=ODB>
+<input type=submit name=cmd value=Status>
+</form></td>
+<td>
+<form name="controls" method="GET" action="">
+&nbsp;&nbsp;  Lines: <input type="text" name="lines" size=4 value=20>
+Filter: <input type="text" name="filter" size=8>
+<input type="button" Value="Apply" onClick="ApplyAction(this.form)">
+</form></td>
+</table>
+</td>
+<th  bgcolor=#C0C0C0 align='center'>Java exec time: <span id="exectime"></span> ms</th>
+</tr>
+
+<tr><td colspan=2>
+<span id="mmessages"></span>
+</tr></table>
+
+</body></html>

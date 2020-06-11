@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<!-- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 TRANSITIONAL//EN"> -->
+<html><head>
+<title>PTF Basic Status</title>
+<style>
+
+div>div {display:inline-block; margin:1em; height:200px;}
+
+#rounded_div {
+    border: 2px solid;
+    border-radius: 25px;
+} 
+
+.bubble { 
+  position: absolute; 
+  display: table; 
+}
+
+
+</style>
+<script type="text/javascript">
+$("a").hover(function(e) {
+    $($(this).data("tooltip")).css({
+        left: e.pageX + 1,
+        top: e.pageY + 1
+    }).stop().show(100);
+}, function() {
+    $($(this).data("tooltip")).hide();
+});
+</script>
+
+
+<!-- Function to call periodically  -->
+    <script type="text/javascript">
+
+function XMLHttpRequestGeneric()
+{
+   var request;
+   try {
+      request = new XMLHttpRequest(); // Firefox, Opera 8.0+, Safari
+   }
+   catch (e) {
+      try {
+         request = new ActiveXObject('Msxml2.XMLHTTP'); // Internet Explorer
+      }
+      catch (e) {
+         try {
+            request = new ActiveXObject('Microsoft.XMLHTTP');
+         }
+         catch (e) {
+           alert('Your browser does not support AJAX!');
+           return undefined;
+         }
+      }
+   }
+
+   return request;
+}
+</script>
+
+<script>
+window.setInterval("Refresh()",2000);
+function fixedPrecision(value){
+  return Math.round(value*1000)/1000;
+}
+function Refresh() {
+
+  var start = new Date().getTime();
+
+  var warning = false;
+
+  var request2 = XMLHttpRequestGeneric();
+  var url2 = "ajax/?cmd=jcopy&odb=/Runinfo/&format=json-nokeys";
+  request2.open('GET', url2, false);
+  request2.send(null);
+
+  var runstatus_json = JSON.parse(request2.responseText);
+
+  if (runstatus_json["State"] == 1){
+    document.getElementById("RunStatus").innerHTML = "Run is stopped"
+    document.getElementById("RunStatus").style.color ="Black"
+    document.getElementById("RunStatusDiv").style.borderColor="Black"
+    document.getElementById("RunStatusDiv").style.borderWidth ="2px"
+  } else {
+    document.getElementById("RunStatus").innerHTML = "Run in progress!"
+    document.getElementById("RunStatus").style.color ="Red"
+    document.getElementById("RunStatusDiv").style.borderColor="Red"
+    document.getElementById("RunStatusDiv").style.borderWidth ="4px"
+    warning = true;
+  }
+
+  var request = XMLHttpRequestGeneric();
+  var url = "ajax/?cmd=jcopy&odb=/Equipment/PtfWiener/&format=json-nokeys";
+  request.open('GET', url, false);
+  request.send(null);
+  var wiener_json = JSON.parse(request.responseText);
+
+
+
+  if ((wiener_json["Readback"]["outputStatus.u0"] == 1 ||
+      wiener_json["Readback"]["outputStatus.u1"] == 1 ||
+      wiener_json["Readback"]["outputStatus.u2"] == 1 ||
+      wiener_json["Readback"]["outputStatus.u3"] == 1) &&
+      wiener_json["Readback"]["sysMainSwitch.0"] == 1){
+   document.getElementById("PowerStatus2").innerHTML = "Magnetic Coils are On!"
+   document.getElementById("PowerStatus2").style.color ="Red"  
+   document.getElementById("PowerStatusDiv2").style.borderColor="Red"
+   warning = true;
+
+  }else{
+    document.getElementById("PowerStatus2").innerHTML = "Magnetic Coils are Off"
+    document.getElementById("PowerStatus2").style.color ="Black"  
+    document.getElementById("PowerStatusDiv2").style.borderColor="Black"
+  } 
+
+
+  if (wiener_json["Readback"]["outputStatus.u4"] == 1 && wiener_json["Readback"]["oMeasSenseV.u4"] > 4 &&
+      wiener_json["Readback"]["sysMainSwitch.0"] == 1){
+   document.getElementById("CoilStatus").innerHTML = "HPD Power is On!"
+   document.getElementById("CoilStatus").style.color ="Red"  
+   document.getElementById("CoilStatusDiv").style.borderColor="Red"
+   warning = true;
+  } else if((wiener_json["Readback"]["outputStatus.u200"] & 1) && wiener_json["Readback"]["oMeasSenseV.u200"] > 4 &&
+      wiener_json["Readback"]["sysMainSwitch.0"] == 1){
+   document.getElementById("CoilStatus").innerHTML = "SK PMT Power is On!"
+   document.getElementById("CoilStatus").style.color ="Red"
+   document.getElementById("CoilStatusDiv").style.borderColor="Red"
+  } else if((wiener_json["Readback"]["outputStatus.u207"] & 1) && wiener_json["Readback"]["oMeasSenseV.u207"] > 4 &&
+      wiener_json["Readback"]["sysMainSwitch.0"] == 1){
+   document.getElementById("CoilStatus").innerHTML = "DEAP PMT Power is On!"
+   document.getElementById("CoilStatus").style.color ="Red"
+   document.getElementById("CoilStatusDiv").style.borderColor="Red"
+  }else{
+   document.getElementById("CoilStatus").innerHTML = "PMT Power is Off"
+   document.getElementById("CoilStatus").style.color ="Black"  
+   document.getElementById("CoilStatusDiv").style.borderColor="Black"
+  }
+
+
+
+  if (wiener_json["Readback"]["sysMainSwitch.0"] == 0){
+    document.getElementById("PowerStatus").innerHTML = "Wiener Power is Off"
+    document.getElementById("PowerStatus").style.color ="Black"
+    document.getElementById("PowerStatusDiv").style.borderColor="Black"
+  } else {
+    document.getElementById("PowerStatus").innerHTML = "Wiener Power is On!"
+    document.getElementById("PowerStatus").style.color ="Red"
+    document.getElementById("PowerStatusDiv").style.borderColor="Red"
+    warning = true;
+  }
+
+  if(warning){
+    document.getElementById("SummaryStatus").innerHTML = "Use caution in entering PTF room!"
+    document.getElementById("SummaryStatus").style.color ="Red"
+  }else{
+    document.getElementById("SummaryStatus").innerHTML = "Safe to enter PTF Room"
+    document.getElementById("SummaryStatus").style.color ="Black"
+   }
+
+
+  var request2 = XMLHttpRequestGeneric();
+  var url2 = "ajax/?cmd=jcopy&odb=/Experiment/Edit on start/&format=json-nokeys";
+  request2.open('GET', url2, false);
+  request2.send(null);
+  var runcon_json = JSON.parse(request2.responseText);
+
+  var runcon_line = "Run Conditions:"; 
+  runcon_line += " Laser power "+ runcon_json["Laser power"] + "";
+  runcon_line += "; Light source "+ runcon_json["Light source"];
+  runcon_line += "; Attenuation "+ runcon_json["Attenuation (dB)"];
+  runcon_line += "; Comments: "+ runcon_json["Comments"];
+
+  document.getElementById("RunConditions").innerHTML = runcon_line;
+
+  var end = new Date().getTime();
+  var time = end - start;
+  document.getElementById("exectime").innerHTML = time
+  document.getElementById("datetime").innerHTML = new Date().toString();
+
+
+}
+</script>
+<!-- Function to call when buttons are pushed  -->
+
+</head>
+
+
+
+<!-- ----------------- BODY ------------->  
+<body onload="Refresh();">
+
+
+<div id="header" style="background-color:#FFA500;">
+<h1 style="margin-bottom:0;font-size:70px;">PMT Test Facility Status</h1>
+</div>
+<div style="height:65px;"></div>
+
+<div style="height:250px;">
+
+  <div id="PowerStatusDiv" style="background-color:#EEEEEE;height:200px;width: 46%;;border: 2px solid;border-radius: 25px;position:relative;">
+    <div class="bubble">
+      <p style="font-size:70px;display:table-cell;text-align:center;vertical-align=middle;" id="PowerStatus"></p>
+    </div>
+  </div>
+  <div id="PowerStatusDiv2" style="background-color:#EEEEEE;height:200px;width: 46%;;border: 2px solid;border-radius: 25px;position:relative;">
+    <div class="bubble">
+      <p style="font-size:70px;display:table-cell;text-align:center;vertical-align=middle;" id="PowerStatus2"></p>
+    </div>
+  </div>
+
+</div>
+
+<div style="height:160px;">
+
+  <div id="RunStatusDiv" style="background-color:#EEEEEE;height:130px;width: 46%;;border: 2px solid;border-radius: 25px;position:relative">
+    
+    <div class="bubble">
+      <p style="font-size:70px;display:table-cell;text-align:center;vertical-align=middle;" id="RunStatus"></p>
+    </div> 
+  </div>
+  <div id="CoilStatusDiv"  style="background-color:#EEEEEE;height:130px;width: 46%;;border: 2px solid;border-radius: 25px;position:relative;">
+    <div class="bubble">
+      <p style="font-size:70px;display:table-cell;text-align:center;vertical-align=middle;" id="CoilStatus"></p>
+    </div>
+  </div>
+
+</div>
+
+<div style="height:80px;">
+
+<p style="text-align:center;font-size:80px" id="SummaryStatus"> </p>
+</div>
+
+
+
+<div id="footer" style="background-color:#66A5FF;clear:both;text-align:center;">
+
+<p>
+<span id="RunConditions"> </span>
+</p>
+</div>
+
+<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+  <p>Last updated: <span  id="datetime"></span>
+  <p>Javascript executed in <span id="exectime"></span> ms. </p>
+</div>
+
+
+</body>
+</html>
+
+
